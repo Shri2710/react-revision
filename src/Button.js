@@ -1,11 +1,11 @@
-import React from 'react'
+import React ,{memo} from 'react'
 
-const Button = ({children,clickAction}) => {
-
-    const handleClick = ()=> clickAction();
+const Button = memo(({ children, clickAction }) => {
+  console.log("Button is rerendered")
+  const handleClick = () => clickAction();
   return (
     <button onClick={handleClick}>{children}</button>
   )
-}
+})
 
 export default Button
