@@ -1,16 +1,17 @@
 import React from 'react';
 import { useState,useRef} from 'react';
-import SecondParent from './SecondParent';
+import PrintTable from './PrintTable';
 const App = () => {
-   const [count,setCount] = useState(0);
-
-   const handleClick = () => {
-      setCount((prev) => prev+1);
-      console.log("I am a parent")
-   }
+   const [counter1,setCounter1] = useState(0);
+   const [counter2,setCounter2] = useState(0);
     return <>
-      Outer Parent: {count} <button onClick = {handleClick}>Click me</button>
-      <SecondParent />
+         Counter 1: {counter1}
+         <button onClick={()=>setCounter1((prev)=> prev+1)}>count1 ++</button>
+         <br />
+         Counter 2: {counter2}
+         <button onClick={()=>setCounter2((prev)=> prev+1)}>count2 ++</button>
+
+         <PrintTable count={counter1} />
     </>
 }
 
