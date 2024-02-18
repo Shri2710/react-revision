@@ -1,31 +1,22 @@
-import React, { useState } from 'react';
-import Tab from './Tab';
+import React, { useState, useEffect } from 'react';
 
 const App = () => {
-    const [currentTabIndex, setCurrenttabIndex] = useState(0);
+    const [photos,setPhotos] = useState([]);
 
-    const handleChange = (val) => {
-        setCurrenttabIndex(val);
-    }
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            const data = await fetch('https://jsonplaceholder.typicode.com/photos');
+            const jsondata = await data.json();
+
+            setPhotos(jsondata);
+        }
+
+        fetchData();
+    },[]);
+ 
     return <>
-        <Tab value={currentTabIndex} onChange={handleChange}>
-            <Tab.Heads>
-                <Tab.Item label={"Tab 1"} index={0} />
-                <Tab.Item label={"Tab 2"} index={1} />
-                <Tab.Item label={"Tab 3"} index={2} />
-            </Tab.Heads>
-            <Tab.ContentWrapper>
-                <Tab.Content index={0}>
-                    <h1>I am content 1</h1>
-                </Tab.Content>
-                <Tab.Content index={1}>
-                    <h1>I am content 2</h1>
-                </Tab.Content>
-                <Tab.Content index={2}>
-                    <h1>I am content 3</h1>
-                </Tab.Content>
-            </Tab.ContentWrapper>
-        </Tab>
+        <h2>Hello Welcome to the album</h2>
+        {photos && photos?.length ? photos.map((pic)=> <img key={pic?.id} loading='lazy' height={200} width={200} src={pic?.url} alt={pic?.title}/>) : <div>Loading Album</div> }
     </>
 }
 
