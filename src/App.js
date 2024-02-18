@@ -1,13 +1,12 @@
 import React from 'react';
 import { useState,useRef, lazy, Suspense} from 'react';
-import Heading from './Heading';
-import { ThemeContext } from './context';
-import NavBar from './NavBar';
+import {createPortal} from 'react-dom';
 const App = () => {
-    const [theme,setTheme] = useState("dark");
-    return <ThemeContext.Provider value={ [theme,setTheme]}>
-            <NavBar clickAction={setTheme}></NavBar>
-    </ThemeContext.Provider>
+    const [showModal,toggleModal] = useState(false);
+    return <>
+        Hey I am inside the root <button onClick={()=> toggleModal((prev)=> !prev)}>Toggle Modal</button>
+        {showModal && createPortal(<div>This is the Modal content</div>,document.body)}
+    </>
 }
 
 
