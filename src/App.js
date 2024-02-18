@@ -1,22 +1,31 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect , useCallback} from 'react';
+import {debounce} from 'lodash';
 const App = () => {
-    const [photos,setPhotos] = useState([]);
+    const [inputData,setInputData] = useState('');
+    const [data,setData] = useState();
 
-    useEffect(()=>{
-        const fetchData = async ()=>{
-            const data = await fetch('https://jsonplaceholder.typicode.com/photos');
-            const jsondata = await data.json();
+    const fetchData = useCallback(debounce(async (value)=>{
+        const data = await fetch(`https://swapi.dev/api/people?search=${value}`);
+        const jsondata = await data.json();
 
-            setPhotos(jsondata);
-        }
+        setData(jsondata.results);
+    },500),[]);
 
-        fetchData();
-    },[]);
  
+    useEffect(()=>{
+        return ()=>{
+            fetchData.cancel();
+        }
+    },[])
+    const handleChange = (e)=>{
+        const value = e?.target?.value;
+        setInputData(value);
+
+        fetchData(value);
+    }
     return <>
-        <h2>Hello Welcome to the album</h2>
-        {photos && photos?.length ? photos.map((pic)=> <img key={pic?.id} loading='lazy' height={200} width={200} src={pic?.url} alt={pic?.title}/>) : <div>Loading Album</div> }
+        <h2>Hello Welcome to Star wars</h2>
+        <input type="text" value={inputData} onChange={handleChange} />
     </>
 }
 
