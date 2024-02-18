@@ -1,10 +1,15 @@
-import React ,{memo} from 'react'
+import React ,{memo,useContext} from 'react'
+import { ThemeContext } from './context';
 
-const Button = memo(({ children, clickAction }) => {
-  console.log("Button is rerendered")
-  const handleClick = () => clickAction();
+const Button = memo(({ children }) => {
+  const [themeValue,setTheme] = useContext(ThemeContext);
+  const handleClick = () => {
+    setTheme((prev)=>{
+      return prev === 'dark' ? 'light' :'dark'
+    })
+  }
   return (
-    <button onClick={handleClick}>{children}</button>
+    <button onClick={handleClick}>{children}{themeValue}</button>
   )
 })
 
