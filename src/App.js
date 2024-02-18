@@ -1,10 +1,13 @@
 import React from 'react';
 import Comp1 from './Comp1';
+import Input from './Input';
 
 const App = () => {
 
     return <>
-        <Comp1 randomNumber={32} />
+        <Input renderTextBelow ={(value)=>{
+            return <>The value is : {value}</>
+        }} />
     </>
 }
 

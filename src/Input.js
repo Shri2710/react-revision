@@ -1,9 +1,18 @@
-import React,{forwardRef} from 'react'
+import React,{useState} from 'react'
 
-const Input = forwardRef((props,ref) => {
+const Input = (props) => {
+
+  const [value,setValue] = useState(null);
+
+  const handleChange = (e)=>{
+    setValue(e.target.value)
+  }
   return (
-    <input ref={ref} type="text"  />
+    <>
+      <input value={value} onChange={handleChange}  />
+      {props.renderTextBelow(value)}
+    </>
   )
-})
+}
 
 export default Input
