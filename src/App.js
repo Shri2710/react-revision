@@ -1,11 +1,17 @@
 import React from 'react';
-import { useState,useRef, lazy, Suspense} from 'react';
-import {createPortal} from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment, incrementByAmount } from './counterSlice'
 const App = () => {
-    const [showModal,toggleModal] = useState(false);
+    const count = useSelector((state) => state.counter.value);
+    const dispatch = useDispatch()
+
     return <>
-        Hey I am inside the root <button onClick={()=> toggleModal((prev)=> !prev)}>Toggle Modal</button>
-        {showModal && createPortal(<div>This is the Modal content</div>,document.body)}
+        {count}
+        <br />
+        <br />
+       <button onClick = {()=> dispatch(increment())}>Increment</button>
+       <button onClick = {()=> dispatch(decrement())}>Decrement</button>
+       <button onClick = {()=> dispatch(incrementByAmount(5))}>Increment by amount 5</button>
     </>
 }
 
